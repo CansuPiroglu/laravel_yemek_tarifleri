@@ -53,6 +53,49 @@
                                     </tr>
                                     </thead>
                                     <tbody>
+                                    <div class="card shadow-sm border-0 mb-4">
+                                        <div class="card-body bg-light rounded">
+                                            <form action="{{ route('recipes.index') }}" method="GET">
+                                                <div class="row g-3 align-items-end">
+
+                                                    <div class="col-md-6">
+                                                        <label for="search" class="form-label fw-bold text-muted mb-1">Tarif Ara</label>
+                                                        <div class="input-group">
+                        <span class="input-group-text bg-white border-end-0">
+                            <svg width="20" height="20" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
+                        </span>
+                                                            <input type="text" name="search" id="search" value="{{ request('search') }}" class="form-control border-start-0" placeholder="Örn: Mercimek Çorbası...">
+                                                        </div>
+                                                    </div>
+
+                                                    <div class="col-md-4">
+                                                        <label for="category" class="form-label fw-bold text-muted mb-1">Kategori Filtrele</label>
+                                                        <select name="category" id="category" class="form-select">
+                                                            <option value="">Tüm Kategoriler</option>
+                                                            @foreach($categories as $category)
+                                                                <option value="{{ $category->id }}" {{ request('category') == $category->id ? 'selected' : '' }}>
+                                                                    {{ $category->name }}
+                                                                </option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+
+                                                    <div class="col-md-2 d-flex gap-2">
+                                                        <button type="submit" class="btn btn-primary w-100 flex-grow-1">
+                                                            Araştır
+                                                        </button>
+
+                                                        @if(request('search') || request('category'))
+                                                            <a href="{{ route('recipes.index') }}" class="btn btn-outline-secondary">
+                                                                Temizle
+                                                            </a>
+                                                        @endif
+                                                    </div>
+
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
                                     @foreach($recipes as $recipe)
                                         <tr>
                                             <td class="fw-medium align-middle">{{ $recipe->id }}</td>
@@ -62,7 +105,8 @@
                                                     @if($recipe->image_path)
                                                         <img src="{{ asset('storage/' . $recipe->image_path) }}" class="me-3 rounded shadow-sm" style="width: 45px; height: 45px; object-fit: cover;" alt="{{ $recipe->title }}">
                                                     @else
-                                                        <img src="https://ui-avatars.com/api/?name={{ urlencode($recipe->title) }}&background=random&color=fff&size=45" class="me-3 rounded shadow-sm" style="width: 45px; height: 45px;" alt="Varsayılan Görsel">
+                                                        <img src="https://ui-avatars.com/api/?name={{ urlencode($recipe->title) }}&background=random&color=fff&size=45"
+                                                             class="me-3 rounded shadow-sm" style="width: 45px; height: 45px;" alt="Varsayılan Görsel">
                                                     @endif
                                                     <div class="flex-grow-1 text-truncate">
                                                         <h6 class="m-0 fw-semibold text-dark">{{ $recipe->title }}</h6>

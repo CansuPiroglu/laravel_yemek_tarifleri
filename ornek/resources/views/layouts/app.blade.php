@@ -303,7 +303,7 @@
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ url('/') }}">
+                        <a class="nav-link" href="{{ route('dashboard') }}">
                             <i class="las la-chart-pie menu-icon text-primary"></i>
                             <span>Dashboard (Ana Sayfa)</span>
                         </a>
@@ -329,6 +329,14 @@
                             <span>Koleksiyonlarım</span>
                         </a>
                     </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('ai.chef.index') }}">
+                            <i class="las la-robot menu-icon"></i>
+                            <span>AI Şef (Ne Pişirsem?)</span>
+                        </a>
+                    </li>
+
                     <li class="menu-label mt-4 border-top pt-2">
                         <span class="text-muted">TEMA REFERANSLARI</span>
                     </li><!--end nav-item-->

@@ -240,7 +240,7 @@
         <div class="modal fade" id="addToListModal" tabindex="-1">
             <div class="modal-dialog modal-dialog-centered">
                 <div class="modal-content border-0 shadow">
-                    <div class="modal-header bg-light">
+                    <div class="modal-header bg-blue">
                         <h5 class="modal-title fw-bold">Tarifi Koleksiyona Kaydet</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                     </div>

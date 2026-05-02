@@ -6,6 +6,7 @@ use App\Http\Controllers\RecipeController;
 use App\Http\Controllers\CategoryController; // Kategori Controller'ını içeri aktardık
 use App\Http\Controllers\CollectionController; // Bunu en üste use kısmına ekle
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\AiChefController;
 
 
 // Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
@@ -48,5 +49,9 @@ Route::post('recipes/{recipe}/toggle-list', [RecipeController::class, 'toggleLis
 // Bunu da alt kısımdaki rotaların yanına ekle
 Route::get('collections', [CollectionController::class, 'index'])->name('collections.index');
 Route::get('collections/{collection}', [CollectionController::class, 'show'])->name('collections.show');
+
+// AI Şef Rotaları
+Route::get('/ne-pisirsem', [AiChefController::class, 'index'])->name('ai.chef.index');
+Route::post('/ne-pisirsem', [AiChefController::class, 'generateRecipe'])->name('ai.chef.generate');
 
 require __DIR__.'/auth.php';

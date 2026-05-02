@@ -16,13 +16,30 @@ class RecipeController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        // Tüm tarifleri veritabanından çek (son eklenen en üstte olsun)
-        $recipes = Recipe::all();
+        // 1. Veritabanından temel sorguyu başlat (N+1 sorunu olmaması için with kullandık)
+        $query = Recipe::with(['category', 'user']);
 
-        // recipes klasöründeki index.blade.php dosyasını aç ve verileri oraya gönder
-        return view('recipes.index', compact('recipes'));
+        // 2. Dropdown (Açılır menü) için tüm kategorileri çek
+        $categories = Category::all();
+
+        // 3. İSME GÖRE ARAMA: Eğer arama kutusuna bir şey yazılmışsa
+        if ($request->filled('search')) {
+            $query->where('title', 'like', '%' . $request->search . '%');
+        }
+
+        // 4. KATEGORİYE GÖRE ARAMA: Eğer dropdown'dan kategori seçilmişse
+        if ($request->filled('category')) {
+            $query->where('category_id', $request->category);
+        }
+
+        // 5. Sonuçları getir (Sayfa başı 12 tarif gösterecek şekilde sayfalama yapıyoruz)
+        // withQueryString() ekliyoruz ki sayfa değiştirirken arama kelimesi kaybolmasın
+        $recipes = $query->latest()->paginate(12)->withQueryString();
+
+        // Verileri View'a gönder
+        return view('recipes.index', compact('recipes', 'categories'));
     }
 
     /**
