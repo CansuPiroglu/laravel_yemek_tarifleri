@@ -4,6 +4,23 @@
     <div class="page-content">
         <div class="container-fluid pt-4 pb-5">
 
+        @if(session('success'))
+        <div class="alert alert-success alert-dismissible fade show border-0 shadow-sm rounded-4 mb-4" role="alert">
+            <div class="d-flex align-items-center">
+                <div class="avatar-sm flex-shrink-0 me-3">
+                    <span class="avatar-title bg-success rounded-circle fs-4">
+                        <i class="las la-check-circle"></i>
+                    </span>
+                </div>
+                <div class="flex-grow-1">
+                    <h5 class="alert-heading fw-bold mb-1">Harika!</h5>
+                    <p class="mb-0">{{ session('success') }}</p>
+                </div>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+        </div>
+    @endif
+
             <div class="row justify-content-center">
                 <div class="col-md-9 col-lg-8">
 
@@ -57,7 +74,23 @@
                     <div class="col-12 col-lg-11 col-xl-10">
 
                         <div class="card shadow-lg border-0 rounded-4 result-card overflow-hidden">
+                            <!-- TARİFİ KAYDET BUTONU -->
+                                <div class="text-center mt-5">
+                                    <form action="{{ route('ai.chef.save') }}" method="POST">
+                                        @csrf
+                                        <input type="hidden" name="content" value="{{ $recipeContent }}">
+                                        <input type="hidden" name="image_url" value="{{ $imageUrl }}">
+                                        <input type="hidden" name="title" value="Şefin Özel AI Tarifi">
+
+                                        <button type="submit" class="btn btn-primary btn-lg px-5 py-3 rounded-pill fw-bold shadow-sm">
+                                            <i class="las la-bookmark me-2 fs-4"></i> Bu Tarifi Koleksiyonuma Kaydet
+                                        </button>
+                                    </form>
+                                </div>
                             <div class="card-body p-4 p-lg-5 bg-white">
+
+                                
+
                                 <div class="d-flex justify-content-between align-items-center mb-4 border-bottom pb-3">
                                     <div class="d-flex align-items-center">
                                         <span class="fs-1 me-3">✨</span>
@@ -74,6 +107,7 @@
 
                                     {!! Str::markdown($recipeContent) !!}
                                 </div>
+
                             </div>
                         </div>
 
@@ -100,7 +134,6 @@
                     }
                 </style>
             @endif
-
         </div>
     </div>
 

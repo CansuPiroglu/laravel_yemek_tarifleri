@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\RecipeList;
+use App\Models\AiRecipe;
 
 class CollectionController extends Controller
 {
@@ -12,7 +13,11 @@ class CollectionController extends Controller
     {
         // Şimdilik 1 numaralı kullanıcının listelerini ve içindeki tarif sayısını çekiyoruz
         $collections = RecipeList::withCount('recipes')->where('user_id', 1)->latest()->get();
-        return view('collections.index', compact('collections'));
+
+        $aiRecipeCount = AiRecipe::count(); // AI tariflerinin sayısını say
+
+        // compact içine 'aiRecipeCount' değişkenini de eklemeyi unutma!
+        return view('collections.index', compact('collections', 'aiRecipeCount'));
     }
 
     // 2. Bir klasörün içine tıklandığında içindeki tarifleri gösterecek sayfa

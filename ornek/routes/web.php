@@ -54,4 +54,13 @@ Route::get('collections/{collection}', [CollectionController::class, 'show'])->n
 Route::get('/ne-pisirsem', [AiChefController::class, 'index'])->name('ai.chef.index');
 Route::post('/ne-pisirsem', [AiChefController::class, 'generateRecipe'])->name('ai.chef.generate');
 
+// AI Tarifini veritabanına kaydetme rotası
+Route::post('/ai-chef/save', [App\Http\Controllers\AiChefController::class, 'saveRecipe'])->name('ai.chef.save');
+
+// Koleksiyonlar sayfasından "İçine Bak" dendiğinde AI tariflerini listeleyecek rota
+Route::get('/ai-chef/koleksiyon', [App\Http\Controllers\AiChefController::class, 'collection'])->name('ai.chef.collection');
+
+// AI Tarifini Silme Rotası
+Route::delete('/ai-chef/koleksiyon/{id}', [App\Http\Controllers\AiChefController::class, 'destroyRecipe'])->name('ai.chef.destroy');
+
 require __DIR__.'/auth.php';

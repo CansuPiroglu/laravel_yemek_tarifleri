@@ -17,7 +17,27 @@
             </div>
 
             <div class="row">
-                @forelse($collections as $collection)
+                
+                <!-- 🤖 AI TARİFLERİM SABİT KUTUSU (En başa eklendi) -->
+                <div class="col-md-4 col-lg-3 mb-4">
+                    <div class="card h-100 shadow-sm border-0 transition-hover" style="border-top: 3px solid #6366f1 !important;">
+                        <div class="card-body text-center p-4">
+                            <div class="avatar-lg mx-auto mb-3">
+                                <span class="avatar-title rounded-circle bg-soft-primary text-primary fs-24 shadow-sm">
+                                    <i class="las la-robot"></i>
+                                </span>
+                            </div>
+                            <h5 class="mb-1 text-dark fw-bold">AI Tariflerim</h5>
+                            <p class="text-muted fs-13 mb-3">{{ $aiRecipeCount ?? 0 }} Tarif Kaydedildi</p>
+                            <a href="{{ route('ai.chef.collection') }}" class="btn btn-sm btn-outline-primary w-100 rounded-pill">
+                                İçine Bak
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- DİĞER KULLANICI KOLEKSİYONLARI -->
+                @foreach($collections as $collection)
                     <div class="col-md-4 col-lg-3 mb-4">
                         <div class="card h-100 shadow-sm border-0 transition-hover">
                             <div class="card-body text-center p-4">
@@ -34,13 +54,17 @@
                             </div>
                         </div>
                     </div>
-                @empty
-                    <div class="col-12 text-center py-5">
+                @endforeach
+                
+                <!-- EĞER HİÇ NORMAL KOLEKSİYON YOKSA -->
+                @if($collections->isEmpty())
+                    <div class="col-12 text-center py-5 mt-4 border-top dashed">
                         <i class="las la-folder-open text-muted" style="font-size: 64px;"></i>
-                        <h5 class="mt-3 text-dark">Henüz Bir Koleksiyonunuz Yok</h5>
-                        <p class="text-muted">Tarif detay sayfasından sevdiğiniz tarifleri kaydederek koleksiyon oluşturabilirsiniz.</p>
+                        <h5 class="mt-3 text-dark">Henüz Bir Normal Koleksiyonunuz Yok</h5>
+                        <p class="text-muted">Tarif detay sayfasından sevdiğiniz tarifleri kaydederek yeni koleksiyonlar oluşturabilirsiniz.</p>
                     </div>
-                @endforelse
+                @endif
+
             </div>
 
         </div>

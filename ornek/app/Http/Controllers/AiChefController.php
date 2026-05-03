@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
+use App\Models\AiRecipe;
 
 class AiChefController extends Controller
 {
@@ -107,5 +108,35 @@ class AiChefController extends Controller
         } catch (\Exception $e) {
             return back()->with('error', 'Bağlantı koptu: ' . $e->getMessage());
         }
+    }
+
+    // ... mevcut metodlar ...  
+
+    // 1. Tarifi Kaydetme Metodu
+    public function saveRecipe(Request $request)
+    {
+            AiRecipe::create([
+            'title' => $request->title ?? 'Şefin Özel AI Tarifi',
+            'content' => $request->content,
+            'image_url' => $request->image_url
+        ]);
+
+        return back()->with('success', 'Tarif başarıyla AI Koleksiyonuna eklendi! ✨');
+    }
+
+    // 2. Koleksiyon İçeriğini Gösterme Metodu
+    public function collection()
+    {
+        $aiRecipes = AiRecipe::latest()->get();
+        return view('ai-chef.collection', compact('aiRecipes'));
+    }
+
+    // AI Tarifini Silme Metodu
+    public function destroyRecipe($id)
+    {
+        $recipe = AiRecipe::findOrFail($id);
+        $recipe->delete();
+
+        return back()->with('success', 'Tarif koleksiyonunuzdan başarıyla silindi. 🗑️');
     }
 }
