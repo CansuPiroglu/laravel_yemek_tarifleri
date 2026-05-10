@@ -2,15 +2,15 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 class Ingredient extends Model
 {
-    use HasFactory;
+    protected $fillable = ['name'];
 
-    // Malzeme adının dışarıdan doldurulmasına izin veriyoruz
-    protected $fillable = [
-        'name'
-    ];
+    // Pivot tablosundaki quantity ve unit alanlarına erişmek için withPivot kullanılır
+    public function recipes()
+    {
+        return $this->belongsToMany(Recipe::class)->withPivot('quantity', 'unit');
+    }
 }

@@ -15,4 +15,9 @@ class RecipeStep extends Model
         'step_number',
         'instruction'
     ];
+
+    public function recipe()
+    {
+        return $this->belongsTo(Recipe::class);
+    }
 }

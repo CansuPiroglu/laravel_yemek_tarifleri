@@ -18,4 +18,9 @@ class RecipeList extends Model
     {
         return $this->belongsToMany(Recipe::class, 'list_recipe', 'recipe_list_id', 'recipe_id');
     }
+
+    public function user()
+    {
+        return $this->belongsTo(User::class);
+    }
 }

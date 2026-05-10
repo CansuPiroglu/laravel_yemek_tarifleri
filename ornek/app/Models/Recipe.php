@@ -42,11 +42,20 @@ class Recipe extends Model
     }
 
     protected $fillable = [
-        'image_path'
+        'user_id','category_id','title','slug',
+        'description','prep_time','cook_time','servings','image_path',
     ];
 
     public function lists()
     {
         return $this->belongsToMany(RecipeList::class, 'list_recipe', 'recipe_id', 'recipe_list_id');
+    }
+
+    // Accessor'lar
+
+    // Ortlama puanı hesaplar (API cevabına otomatik eklenir)
+    public function getAverageRatingAttribute(): ?float
+    {
+        return $this->reviews()->avg('rating');
     }
 }
