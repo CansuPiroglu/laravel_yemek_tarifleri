@@ -44,6 +44,8 @@ Route::middleware('auth:sanctum')->group(function () {
 
     // Yorumlar (Faz 2)
     Route::post('/recipes/{recipeId}/reviews', [ReviewController::class, 'store']);
-    
+
     // İleride API üzerinden tarif ekleme/silme işlemleri yaparsan onları da buraya yazacağız.
+
+    Route::post('/ai/suggest', [\App\Http\Controllers\Api\AiController::class, 'suggest']);
 });
