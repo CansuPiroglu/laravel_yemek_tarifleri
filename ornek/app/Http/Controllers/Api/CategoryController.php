@@ -3,21 +3,24 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use App\Models\Category;
-use Illuminate\Support\Str; // Slug oluşturmak için bu sınıfı dahil etmeliyiz!
+use Illuminate\Http\Request;
+use Illuminate\Support\Str; // Slug işlemi için gerekli
 
 class CategoryController extends Controller
 {
-    /**
-     * KATEGORİ OLUŞTUR (admin gerekli)
-     *
-     * POST /api/categories
-     * Body: { name }
-     */
+    // ── MOBİL İÇİN KATEGORİLERİ GETİR (Bizim eklediğimiz) ──
+    public function index()
+    {
+        $categories = Category::all();
+
+        return response()->json($categories, 200);
+    }
+
+    // ── YENİ KATEGORİ OLUŞTUR (Senin önceden yazdığın) ──
     public function store(Request $request)
     {
-        // 1. Gelen veriyi doğrula (Boş olamaz, metin olmalı ve categories tablosunda benzersiz olmalı)
+        // 1. Gelen veriyi doğrula
         $request->validate([
             'name' => 'required|string|max:255|unique:categories,name',
         ]);
@@ -31,7 +34,7 @@ class CategoryController extends Controller
             'slug' => $slug,
         ]);
 
-        // 4. İşlemin başarılı olduğunu gösteren JSON yanıtını döndür (201 Created)
+        // 4. İşlemin başarılı olduğunu gösteren JSON yanıtını döndür
         return response()->json([
             'message' => 'Kategori başarıyla oluşturuldu.',
             'category' => $category

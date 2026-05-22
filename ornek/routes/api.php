@@ -48,4 +48,11 @@ Route::middleware('auth:sanctum')->group(function () {
     // İleride API üzerinden tarif ekleme/silme işlemleri yaparsan onları da buraya yazacağız.
 
     Route::post('/ai/suggest', [\App\Http\Controllers\Api\AiController::class, 'suggest']);
+
+    // Koleksiyon (Özel Listeler) Rotaları
+    Route::get('/collections', [\App\Http\Controllers\Api\CollectionController::class, 'index']);
+    Route::post('/collections', [\App\Http\Controllers\Api\CollectionController::class, 'store']);
+    Route::post('/collections/{listId}/toggle/{recipeId}', [\App\Http\Controllers\Api\CollectionController::class, 'toggleRecipe']);
+
+    Route::get('/collections/{id}', [\App\Http\Controllers\Api\CollectionController::class, 'show']);
 });
